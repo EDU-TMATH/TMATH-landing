@@ -19,17 +19,17 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider">Khóa học</h3>
             <ul className="space-y-2 text-sm text-[#d4ebff]">
               <li>
-                <a href="#" className="transition hover:text-white">
+                <a href="https://p.tmathcoding.vn" className="transition hover:text-white">
                   Tiểu học: Scratch/Python
                 </a>
               </li>
               <li>
-                <a href="#" className="transition hover:text-white">
+                <a href="https://c.tmathcoding.vn" className="transition hover:text-white">
                   THCS: C++ chuyên Tin
                 </a>
               </li>
               <li>
-                <a href="#" className="transition hover:text-white">
+                <a href="https://c.tmathcoding.vn" className="transition hover:text-white">
                   THPT: Thi đấu HSG
                 </a>
               </li>
@@ -75,8 +75,8 @@ export default function Footer() {
               </div>
               <div>
                 <p className="font-medium text-white">Điện thoại</p>
-                <a href="tel:+84123456789" className="transition hover:text-white">
-                  (+84) 123 456 789
+                <a href="tel:+84947771736" className="transition hover:text-white">
+                  (+84) 947 771 736
                 </a>
               </div>
               <div>
