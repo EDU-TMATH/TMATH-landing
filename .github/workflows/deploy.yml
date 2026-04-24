@@ -26,6 +26,8 @@ jobs:
           script: |
             set -euo pipefail
 
+            export PATH="$HOME/.npm-global/bin:$PATH"
+
             APP_DIR="${{ secrets.DEPLOY_PATH }}"
             APP_NAME="${{ secrets.PM2_APP_NAME }}"
             BRANCH="${{ github.ref_name }}"
