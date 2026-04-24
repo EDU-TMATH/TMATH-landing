@@ -22,6 +22,7 @@ interface ApiAchievement {
   level: string;
   year: string | null;
   rank: string;
+  avatar: string | null;
 }
 
 interface Achievement {
@@ -32,6 +33,7 @@ interface Achievement {
   level: Exclude<Level, "Tất cả">;
   year: string;
   rank: Rank;
+  avatar: string | null;
 }
 
 const API_BASE = "https://c.tmathcoding.vn/api/v3";
@@ -120,8 +122,20 @@ function AchievementCard({ item }: { item: Achievement }) {
       {/* Header row */}
       <div className="flex items-start gap-3">
         {/* Avatar */}
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-[#0a2a43] shadow-sm ring-1 ring-[#0a2a43]/10">
-          {getInitials(item.name)}
+        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-white shadow-sm ring-1 ring-[#0a2a43]/10">
+          {item.avatar ? (
+            <Image
+              src={item.avatar}
+              alt={item.name}
+              fill
+              sizes="44px"
+              className="object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center text-sm font-bold text-[#0a2a43]">
+              {getInitials(item.name)}
+            </div>
+          )}
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate font-semibold text-[#08304d]">{item.name}</p>
@@ -208,6 +222,7 @@ export default function ThanhTichPage() {
               level,
               year: item.year,
               rank: normalizeRank(item.rank),
+              avatar: item.avatar,
             } satisfies Achievement;
           })
           .filter((item): item is Achievement => item !== null);
