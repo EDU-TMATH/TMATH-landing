@@ -16,6 +16,27 @@ export const metadata: Metadata = {
   title: "TMATH | Trung tâm lập trình thi đấu",
   description:
     "TMATH đào tạo lập trình thi đấu theo lộ trình Tiểu học, THCS, THPT: Scratch/Python, C++ chuyên Tin, HSG và ôn thi lớp 12.",
+  icons: {
+    icon: [
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/favicon.ico", type: "image/x-icon" },
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/icons/safari-pinned-tab.svg",
+        color: "#0d3f63",
+      },
+    ],
+  },
+  manifest: "/icons/manifest.json",
+  other: {
+    "msapplication-config": "/icons/browserconfig.xml",
+    "msapplication-TileColor": "#0d3f63",
+    "theme-color": "#ffffff",
+  },
 };
 
 export default function RootLayout({
