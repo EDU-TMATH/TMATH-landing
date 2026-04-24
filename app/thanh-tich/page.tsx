@@ -1,13 +1,28 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// ─── Data ──────────────────────────────────────────────────────────────────
-
 type Level = "Tất cả" | "Tiểu học" | "THCS" | "THPT";
-type Year = "Tất cả" | "2022-2023" | "2023-2024" | "2024-2025";
+type Year = "Tất cả" | string;
+type Rank = "gold" | "silver" | "bronze" | "special";
+
+interface ApiSchoolYear {
+  id: number;
+  start: number;
+  finish: number;
+}
+
+interface ApiAchievement {
+  id: number;
+  name: string;
+  award: string;
+  contest: string;
+  level: string;
+  year: string | null;
+  rank: string;
+}
 
 interface Achievement {
   id: number;
@@ -15,236 +30,40 @@ interface Achievement {
   award: string;
   contest: string;
   level: Exclude<Level, "Tất cả">;
-  year: Exclude<Year, "Tất cả">;
-  rank: "gold" | "silver" | "bronze" | "special";
+  year: string;
+  rank: Rank;
 }
 
-const ACHIEVEMENTS: Achievement[] = [
-  // 2024-2025
-  // {
-  //   id: 1,
-  //   name: "Nguyễn Minh Khôi",
-  //   award: "Giải Nhất HSG Quốc Gia",
-  //   contest: "Kỳ thi HSG Quốc Gia môn Tin học",
-  //   level: "THPT",
-  //   year: "2024-2025",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 2,
-  //   name: "Trần Phương Anh",
-  //   award: "Giải Nhì HSG Quốc Gia",
-  //   contest: "Kỳ thi HSG Quốc Gia môn Tin học",
-  //   level: "THPT",
-  //   year: "2024-2025",
-  //   rank: "silver",
-  // },
-  // {
-  //   id: 3,
-  //   name: "Lê Đức Thành",
-  //   award: "Giải Nhất HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 12",
-  //   level: "THPT",
-  //   year: "2024-2025",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 4,
-  //   name: "Phạm Thị Lan",
-  //   award: "Giải Nhất HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 9",
-  //   level: "THCS",
-  //   year: "2024-2025",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 5,
-  //   name: "Vũ Quang Huy",
-  //   award: "Giải Nhì HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 9",
-  //   level: "THCS",
-  //   year: "2024-2025",
-  //   rank: "silver",
-  // },
-  // {
-  //   id: 6,
-  //   name: "Ngô Bảo Châu",
-  //   award: "Đỗ chuyên Tin THPT Chuyên",
-  //   contest: "Kỳ thi tuyển sinh vào lớp 10 chuyên Tin",
-  //   level: "THCS",
-  //   year: "2024-2025",
-  //   rank: "special",
-  // },
-  // {
-  //   id: 7,
-  //   name: "Đinh Tuấn Kiệt",
-  //   award: "Đỗ chuyên Tin THPT Chuyên",
-  //   contest: "Kỳ thi tuyển sinh vào lớp 10 chuyên Tin",
-  //   level: "THCS",
-  //   year: "2024-2025",
-  //   rank: "special",
-  // },
-  // {
-  //   id: 8,
-  //   name: "Hoàng Gia Bảo",
-  //   award: "Giải Nhất Scratch Quốc Tế",
-  //   contest: "Scratch Coding Challenge - Asia Pacific",
-  //   level: "Tiểu học",
-  //   year: "2024-2025",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 9,
-  //   name: "Lý Thị Ngọc",
-  //   award: "Giải Nhì Olympic Tin Học",
-  //   contest: "Olympic Tin học Việt Nam cấp Tiểu học",
-  //   level: "Tiểu học",
-  //   year: "2024-2025",
-  //   rank: "silver",
-  // },
-  // // 2023-2024
-  // {
-  //   id: 10,
-  //   name: "Đặng Văn Long",
-  //   award: "Giải Ba HSG Quốc Gia",
-  //   contest: "Kỳ thi HSG Quốc Gia môn Tin học",
-  //   level: "THPT",
-  //   year: "2023-2024",
-  //   rank: "bronze",
-  // },
-  // {
-  //   id: 11,
-  //   name: "Bùi Thanh Tú",
-  //   award: "Giải Nhất HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 12",
-  //   level: "THPT",
-  //   year: "2023-2024",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 12,
-  //   name: "Cao Hải Minh",
-  //   award: "Giải Nhì HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 12",
-  //   level: "THPT",
-  //   year: "2023-2024",
-  //   rank: "silver",
-  // },
-  // {
-  //   id: 13,
-  //   name: "Trịnh Thu Hương",
-  //   award: "Giải Nhất HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 9",
-  //   level: "THCS",
-  //   year: "2023-2024",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 14,
-  //   name: "Nguyễn Duy Khang",
-  //   award: "Đỗ chuyên Tin THPT Chuyên",
-  //   contest: "Kỳ thi tuyển sinh vào lớp 10 chuyên Tin",
-  //   level: "THCS",
-  //   year: "2023-2024",
-  //   rank: "special",
-  // },
-  // {
-  //   id: 15,
-  //   name: "Mai Phước Lộc",
-  //   award: "Đỗ chuyên Tin THPT Chuyên",
-  //   contest: "Kỳ thi tuyển sinh vào lớp 10 chuyên Tin",
-  //   level: "THCS",
-  //   year: "2023-2024",
-  //   rank: "special",
-  // },
-  // {
-  //   id: 16,
-  //   name: "Phan Gia Khiêm",
-  //   award: "Giải Nhất Olympic Tin Học",
-  //   contest: "Olympic Tin học Việt Nam cấp Tiểu học",
-  //   level: "Tiểu học",
-  //   year: "2023-2024",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 17,
-  //   name: "Đoàn Khánh Linh",
-  //   award: "Giải Khuyến Khích HSG Quốc Gia",
-  //   contest: "Kỳ thi HSG Quốc Gia môn Tin học",
-  //   level: "THPT",
-  //   year: "2023-2024",
-  //   rank: "bronze",
-  // },
-  // // 2022-2023
-  // {
-  //   id: 18,
-  //   name: "Lưu Hồng Phúc",
-  //   award: "Giải Nhì HSG Quốc Gia",
-  //   contest: "Kỳ thi HSG Quốc Gia môn Tin học",
-  //   level: "THPT",
-  //   year: "2022-2023",
-  //   rank: "silver",
-  // },
-  // {
-  //   id: 19,
-  //   name: "Tô Minh Hiếu",
-  //   award: "Giải Nhất HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 12",
-  //   level: "THPT",
-  //   year: "2022-2023",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 20,
-  //   name: "Nguyễn Yến Nhi",
-  //   award: "Giải Nhất HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 9",
-  //   level: "THCS",
-  //   year: "2022-2023",
-  //   rank: "gold",
-  // },
-  // {
-  //   id: 21,
-  //   name: "Từ Gia Hân",
-  //   award: "Giải Nhì HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 9",
-  //   level: "THCS",
-  //   year: "2022-2023",
-  //   rank: "silver",
-  // },
-  // {
-  //   id: 22,
-  //   name: "Phan Đăng Khoa",
-  //   award: "Đỗ chuyên Tin THPT Chuyên",
-  //   contest: "Kỳ thi tuyển sinh vào lớp 10 chuyên Tin",
-  //   level: "THCS",
-  //   year: "2022-2023",
-  //   rank: "special",
-  // },
-  // {
-  //   id: 23,
-  //   name: "Hoàng Khánh An",
-  //   award: "Giải Ba Olympic Tin Học",
-  //   contest: "Olympic Tin học Việt Nam cấp Tiểu học",
-  //   level: "Tiểu học",
-  //   year: "2022-2023",
-  //   rank: "bronze",
-  // },
-  // {
-  //   id: 24,
-  //   name: "Vương Quốc Bảo",
-  //   award: "Giải Ba HSG Tỉnh",
-  //   contest: "Kỳ thi HSG Tỉnh môn Tin học lớp 12",
-  //   level: "THPT",
-  //   year: "2022-2023",
-  //   rank: "bronze",
-  // },
-];
-
-// ─── Constants ─────────────────────────────────────────────────────────────
-
-const YEARS: Year[] = ["Tất cả", "2024-2025", "2023-2024", "2022-2023"];
+const API_BASE = "https://c.tmathcoding.vn/api/v3";
 const LEVELS: Level[] = ["Tất cả", "Tiểu học", "THCS", "THPT"];
+
+function normalizeLevel(level: string): Exclude<Level, "Tất cả"> | null {
+  const value = level.trim().toLowerCase();
+  if (value === "tiểu học" || value === "tieu hoc" || value === "primary") {
+    return "Tiểu học";
+  }
+  if (value === "thcs" || value === "secondary") {
+    return "THCS";
+  }
+  if (value === "thpt" || value === "highschool" || value === "high school") {
+    return "THPT";
+  }
+  return null;
+}
+
+function normalizeRank(rank: string): Rank {
+  const value = rank.trim().toLowerCase();
+  if (value === "gold") {
+    return "gold";
+  }
+  if (value === "silver") {
+    return "silver";
+  }
+  if (value === "bronze") {
+    return "bronze";
+  }
+  return "special";
+}
 
 const RANK_CONFIG = {
   gold: {
@@ -342,38 +161,115 @@ function AchievementCard({ item }: { item: Achievement }) {
 // ─── Page ──────────────────────────────────────────────────────────────────
 
 export default function ThanhTichPage() {
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [years, setYears] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeYear, setActiveYear] = useState<Year>("Tất cả");
   const [activeLevel, setActiveLevel] = useState<Level>("Tất cả");
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadData() {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const [yearsRes, achievementsRes] = await Promise.all([
+          fetch(`${API_BASE}/years`, { signal: controller.signal }),
+          fetch(`${API_BASE}/achievements`, { signal: controller.signal }),
+        ]);
+
+        if (!yearsRes.ok || !achievementsRes.ok) {
+          throw new Error("Không tải được dữ liệu thành tích từ hệ thống.");
+        }
+
+        const yearsData = (await yearsRes.json()) as ApiSchoolYear[];
+        const achievementsData = (await achievementsRes.json()) as ApiAchievement[];
+
+        const mappedYears = yearsData
+          .map((year) => `${year.start}-${year.finish}`)
+          .filter((value, index, array) => array.indexOf(value) === index);
+
+        const mappedAchievements = achievementsData
+          .map((item) => {
+            const level = normalizeLevel(item.level);
+
+            if (!level || !item.year) {
+              return null;
+            }
+
+            return {
+              id: item.id,
+              name: item.name,
+              award: item.award,
+              contest: item.contest,
+              level,
+              year: item.year,
+              rank: normalizeRank(item.rank),
+            } satisfies Achievement;
+          })
+          .filter((item): item is Achievement => item !== null);
+
+        setYears(mappedYears);
+        setAchievements(mappedAchievements);
+      } catch {
+        setError("Không thể tải dữ liệu lúc này. Vui lòng thử lại sau.");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    void loadData();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  const yearOptions = useMemo<Year[]>(() => ["Tất cả", ...years], [years]);
+
   const filtered = useMemo(() => {
-    return ACHIEVEMENTS.filter((a) => {
+    return achievements.filter((a) => {
       const yearOk = activeYear === "Tất cả" || a.year === activeYear;
       const levelOk = activeLevel === "Tất cả" || a.level === activeLevel;
       return yearOk && levelOk;
     });
-  }, [activeYear, activeLevel]);
+  }, [activeYear, activeLevel, achievements]);
 
   // Count per year (for badges)
   const yearCounts = useMemo(() => {
-    const counts: Record<string, number> = { "Tất cả": ACHIEVEMENTS.length };
-    ACHIEVEMENTS.forEach((a) => {
+    const counts: Record<string, number> = { "Tất cả": achievements.length };
+    achievements.forEach((a) => {
       counts[a.year] = (counts[a.year] ?? 0) + 1;
     });
     return counts;
-  }, []);
+  }, [achievements]);
 
   // Count per level, respecting active year filter
   const levelCounts = useMemo(() => {
     const base =
       activeYear === "Tất cả"
-        ? ACHIEVEMENTS
-        : ACHIEVEMENTS.filter((a) => a.year === activeYear);
+        ? achievements
+        : achievements.filter((a) => a.year === activeYear);
     const counts: Record<string, number> = { "Tất cả": base.length };
     base.forEach((a) => {
       counts[a.level] = (counts[a.level] ?? 0) + 1;
     });
     return counts;
-  }, [activeYear]);
+  }, [activeYear, achievements]);
+
+  const topStats = useMemo(() => {
+    const goldCount = achievements.filter((item) => item.rank === "gold").length;
+    const specialCount = achievements.filter((item) => item.rank === "special").length;
+
+    return [
+      { value: String(achievements.length), label: "Tổng thành tích" },
+      { value: String(goldCount), label: "Giải Nhất / Vàng" },
+      { value: String(specialCount), label: "Đặc biệt / Đỗ chuyên" },
+    ];
+  }, [achievements]);
 
   return (
     <>
@@ -419,11 +315,7 @@ export default function ThanhTichPage() {
 
           {/* Stats pills */}
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            {[
-              { value: "50+", label: "Đỗ chuyên Tin" },
-              { value: "30+", label: "Giải HSG Tỉnh/TP" },
-              { value: "12", label: "Đội tuyển QG" },
-            ].map(({ value, label }) => (
+            {topStats.map(({ value, label }) => (
               <div
                 key={label}
                 className="rounded-2xl bg-white/80 px-6 py-4 text-center ring-1 ring-[#0a2a43]/10 backdrop-blur"
@@ -447,7 +339,7 @@ export default function ThanhTichPage() {
               Năm học
             </p>
             <div className="flex flex-wrap gap-2">
-              {YEARS.map((y) => (
+              {yearOptions.map((y) => (
                 <button
                   key={y}
                   onClick={() => {
@@ -510,6 +402,16 @@ export default function ThanhTichPage() {
             </div>
           </div>
         </div>
+
+        {isLoading && (
+          <p className="mb-6 text-sm text-[#4a7a96]">Đang tải dữ liệu thành tích...</p>
+        )}
+
+        {!isLoading && error && (
+          <p className="mb-6 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 ring-1 ring-red-100">
+            {error}
+          </p>
+        )}
 
         {/* ── Results count ── */}
         <p className="mb-6 text-sm text-[#4a7a96]">
