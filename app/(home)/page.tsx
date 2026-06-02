@@ -1,10 +1,10 @@
 import Header from "@/app/components/Header";
-import HeroSection from "@/app/components/HeroSection";
-import PathwayCards from "@/app/components/PathwayCards";
-import PlatformSection from "@/app/components/PlatformSection";
-import AchievementsSection from "@/app/components/AchievementsSection";
-import FeaturedStudents from "@/app/components/FeaturedStudents";
-import CTASection from "@/app/components/CTASection";
+import HeroSection from "@/app/(home)/components/HeroSection";
+import PathwayCards from "@/app/(home)/components/PathwayCards";
+import PlatformSection from "@/app/(home)/components/PlatformSection";
+import AchievementsSection from "@/app/(home)/components/AchievementsSection";
+import FeaturedStudents from "@/app/(home)/components/FeaturedStudents";
+import CTASection from "@/app/(home)/components/CTASection";
 import Footer from "@/app/components/Footer";
 
 export default function Home() {

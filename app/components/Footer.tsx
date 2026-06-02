@@ -19,17 +19,17 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider">Khóa học</h3>
             <ul className="space-y-2 text-sm text-[#d4ebff]">
               <li>
-                <a href="https://p.tmathcoding.vn" className="transition hover:text-white">
+                <a href="https://play.tmathcoding.vn" className="transition hover:text-white">
                   Tiểu học: Scratch/Python
                 </a>
               </li>
               <li>
-                <a href="https://c.tmathcoding.vn" className="transition hover:text-white">
+                <a href="https://oj.tmathcoding.vn" className="transition hover:text-white">
                   THCS: C++ chuyên Tin
                 </a>
               </li>
               <li>
-                <a href="https://c.tmathcoding.vn" className="transition hover:text-white">
+                <a href="https://oj.tmathcoding.vn" className="transition hover:text-white">
                   THPT: Thi đấu HSG
                 </a>
               </li>

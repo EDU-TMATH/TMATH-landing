@@ -36,7 +36,7 @@ interface Achievement {
   avatar: string | null;
 }
 
-const API_BASE = "https://c.tmathcoding.vn/api/v3";
+const API_BASE = "https://oj.tmathcoding.vn/api/v3";
 const LEVELS: Level[] = ["Tất cả", "Tiểu học", "THCS", "THPT"];
 
 function normalizeLevel(level: string): Exclude<Level, "Tất cả"> | null {

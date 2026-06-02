@@ -4,7 +4,7 @@ export default function PlatformSection() {
       tag: "Tiểu học · Scratch / Python",
       name: "TMATH Playground",
       desc: "Sân luyện tập trực quan dành cho học sinh tiểu học — nộp bài Scratch và Python, nhận phản hồi tức thì, thi đấu theo mùa giải.",
-      href: "https://p.tmathcoding.vn",
+      href: "https://play.tmathcoding.vn",
       stats: [
         { value: "Scratch", label: "& Python" },
         { value: "Thi đấu", label: "theo mùa" },
@@ -36,7 +36,7 @@ export default function PlatformSection() {
       tag: "THCS · THPT · C++",
       name: "TMATH Online Judge",
       desc: "Hệ thống chấm thi tự động cho C++ và nhiều ngôn ngữ khác — 602 bài tập từ cơ bản đến thi đấu quốc gia, hỗ trợ 15 ngôn ngữ lập trình.",
-      href: "https://c.tmathcoding.vn",
+      href: "https://oj.tmathcoding.vn",
       stats: [
         { value: "602+", label: "bài tập" },
         { value: "15", label: "ngôn ngữ" },
