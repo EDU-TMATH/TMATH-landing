@@ -13,9 +13,14 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "TMATH | Trung tâm lập trình thi đấu",
+  title: "TMATH EDU | Trung tâm lập trình thi đấu",
   description:
     "TMATH đào tạo lập trình thi đấu theo lộ trình Tiểu học, THCS, THPT: Scratch/Python, C++ chuyên Tin, HSG và ôn thi lớp 12.",
+  applicationName: 'TMATH EDU',
+  openGraph: {
+    siteName: 'TMATH EDU',
+    title: 'TMATH EDU | Trung tâm lập trình thi đấu',
+  },
   icons: {
     icon: [
       { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
@@ -36,6 +41,9 @@ export const metadata: Metadata = {
     "msapplication-config": "/icons/browserconfig.xml",
     "msapplication-TileColor": "#0d3f63",
     "theme-color": "#ffffff",
+  },
+  alternates: {
+    canonical: 'https://tmathcoding.vn',
   },
 };
 
