@@ -1,3 +1,5 @@
+import { ZALO_URL } from "@/app/lib/contact";
+
 export default function CTASection() {
   return (
     <section className="rounded-4xl bg-[#0d3f63] px-7 py-10 text-white shadow-[0_30px_80px_rgba(10,42,67,0.35)] sm:px-10">
@@ -10,10 +12,12 @@ export default function CTASection() {
       </p>
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <a
-          href="#"
+          href={ZALO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-full bg-[#ffcc4d] px-6 py-3 text-center text-sm font-extrabold text-[#3a2a00] transition hover:-translate-y-0.5 hover:bg-[#f2bf3c]"
         >
-          Đặt lịch tư vấn ngay
+          Đặt lịch tư vấn qua Zalo
         </a>
         <p className="text-sm text-[#d4ebff]">Đánh giá đầu vào 1-1 | Hoàn toàn miễn phí</p>
       </div>

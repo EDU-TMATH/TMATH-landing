@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ZALO_URL } from "@/app/lib/contact";
 
 export default function Footer() {
   return (
@@ -69,8 +70,8 @@ export default function Footer() {
             <div className="space-y-2 text-sm text-[#d4ebff]">
               <div>
                 <p className="font-medium text-white">Email</p>
-                <a href="mailto:hello@tmath.edu.vn" className="transition hover:text-white">
-                  hello@tmath.edu.vn
+                <a href="mailto:techmathdev@gmail.com" className="transition hover:text-white">
+                  techmathdev@gmail.com
                 </a>
               </div>
               <div>
@@ -115,7 +116,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://zalo.me/tmath"
+                href={ZALO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-lg bg-[#1f5f8b] p-2.5 transition hover:bg-[#2aa5d6]"

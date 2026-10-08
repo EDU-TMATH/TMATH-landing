@@ -1,3 +1,5 @@
+import { ZALO_URL } from "@/app/lib/contact";
+
 export default function HeroSection() {
   return (
     <section className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
@@ -16,10 +18,12 @@ export default function HeroSection() {
         <div className="flex flex-col gap-4 pt-1 sm:flex-row">
           <a
             id="dang-ky"
-            href="#"
+            href={ZALO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="rounded-full bg-[#f46f35] px-7 py-3 text-center text-sm font-bold text-white shadow-[0_10px_25px_rgba(244,111,53,0.35)] transition hover:-translate-y-0.5 hover:bg-[#db5f2b]"
           >
-            Đăng ký học thử
+            Đăng ký học thử qua Zalo
           </a>
           <a
             href="#"

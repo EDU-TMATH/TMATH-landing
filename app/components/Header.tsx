@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ZALO_URL } from "@/app/lib/contact";
 
 export default function Header() {
   return (
@@ -25,7 +26,9 @@ export default function Header() {
           Thành tích
         </Link>
         <a
-          href="#dang-ky"
+          href={ZALO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-full border border-[#0a2a43] px-5 py-2 text-sm font-semibold text-[#0a2a43] transition hover:-translate-y-0.5 hover:bg-[#0a2a43] hover:text-white"
         >
           Dùng thử miễn phí

@@ -33,6 +33,16 @@ body {
   animation: orb-float 7.5s ease-in-out infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @keyframes orb-float {
   0%,
   100% {
